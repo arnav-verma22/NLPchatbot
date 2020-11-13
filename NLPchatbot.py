@@ -25,7 +25,7 @@ comment = str(input('Please give some feedback: '))
 corpus.append(comment)
 
 from sklearn.feature_extraction.text import CountVectorizer
-cv = CountVectorizer(max_features=1500)
+cv = CountVectorizer(max_features=1400)
 x = cv.fit_transform(corpus).toarray()
 y = df.iloc[:, -1].values
 
@@ -41,13 +41,30 @@ from sklearn.tree import DecisionTreeClassifier
 classifier = DecisionTreeClassifier(criterion = 'entropy', random_state = 0)
 classifier.fit(xtrain, ytrain)
 
-y_pred = classifier.predict(xtest)
 #print(np.concatenate((y_pred.reshape(len(y_pred),1), ytest.reshape(len(ytest),1)),1))
+y_pred = classifier.predict(xtest)
+
+ann = tf.keras.models.Sequential()
+ann.add(tf.keras.layers.Dense(units=1400, activation='relu'))
+ann.add(tf.keras.layers.Dense(units=800, activation='relu'))
+ann.add(tf.keras.layers.Dense(units=300, activation='relu'))
+ann.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
+ann.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+ann.fit(xtrain, ytrain, batch_size = 32, epochs = 100)
+
+
+nn_prediction = np.around(ann.predict(xtest))
+#y_pred = (round(y_pred))
+
 
 from sklearn.metrics import confusion_matrix, accuracy_score
 cm = confusion_matrix(ytest, y_pred)
 print(cm)
 print(accuracy_score(ytest, y_pred))
+
+cmn = confusion_matrix(ytest, nn_prediction)
+print('NN accuracy', cmn)
+print(accuracy_score(ytest, nn_prediction))
 
 z = classifier.predict([testing])
 if z == 1:
