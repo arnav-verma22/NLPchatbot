@@ -30,6 +30,8 @@ x = cv.fit_transform(corpus).toarray()
 y = df.iloc[:, -1].values
 
 testing = x[-1]
+testing = testing.reshape((1, 1400))
+
 
 x = np.delete(x, -1, axis=0)
 print(np.shape(x))
@@ -66,7 +68,7 @@ cmn = confusion_matrix(ytest, nn_prediction)
 print('NN accuracy', cmn)
 print(accuracy_score(ytest, nn_prediction))
 
-z = classifier.predict([testing])
+z = ann.predict([testing])
 if z == 1:
     print("Thank you sir..")
 else:
