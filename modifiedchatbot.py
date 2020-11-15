@@ -59,3 +59,11 @@ def bag_of_words(corpus):
     x = cv.fit_transform(corpus).toarray()
     return x
 
+ann = tf.keras.models.Sequential()
+def building_nn(xtrain, ytrain):
+    ann.add(tf.keras.layers.Dense(units=1400, activation='relu'))
+    ann.add(tf.keras.layers.Dense(units=800, activation='relu'))
+    ann.add(tf.keras.layers.Dense(units=300, activation='relu'))
+    ann.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
+
+
