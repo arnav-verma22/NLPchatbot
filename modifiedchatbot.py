@@ -66,4 +66,12 @@ def building_nn(xtrain, ytrain):
     ann.add(tf.keras.layers.Dense(units=300, activation='relu'))
     ann.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
 
+def train_nn(xtrain, ytrain):
+    ann.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    ann.fit(xtrain, ytrain, batch_size=32, epochs=100)
+
+def classify(xtest):
+    z = np.around(ann.predict(xtest))
+    return z
+
 
