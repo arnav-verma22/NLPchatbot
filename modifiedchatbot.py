@@ -74,4 +74,16 @@ def classify(xtest):
     z = np.around(ann.predict(xtest))
     return z
 
+if __name__ == "__main__":
+    z = -1
+    while z != 2:
+        chat = str(input("You: "))
+        preprocess_review(chat)
+        corpus.append(chat)
+        x = bag_of_words(corpus)
+        y = dfq.iloc[:, -1].values
+        testing = x[-1]
+        testing = testing.reshape((1, 1400))
+        x = np.delete(x, -1, axis=0)
+        print(np.shape(x))
 
