@@ -53,3 +53,9 @@ def preprocess_review(statement):
 for i in dfq['index']:
     preprocess_review(i)
 
+def bag_of_words(corpus):
+    from sklearn.feature_extraction.text import CountVectorizer
+    cv = CountVectorizer(max_features=1400)
+    x = cv.fit_transform(corpus).toarray()
+    return x
+
