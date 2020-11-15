@@ -34,3 +34,22 @@ dfq = pd.DataFrame.from_dict(dict_q, orient="index")
 dfq.reset_index(drop=False, inplace=True)
 
 
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+corpus = []
+stop = stopwords.words('english')
+stop.remove('not')
+ps = PorterStemmer()
+
+
+def preprocess_review(statement):
+    review = re.sub('[^a-zA-Z]', ' ', statement)
+    review = review.lower()
+    review = review.split()
+    review = [ps.stem(i) for i in review]
+    review = ' '.join(review)
+    corpus.append(review)
+
+for i in dfq['index']:
+    preprocess_review(i)
+
