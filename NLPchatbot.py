@@ -22,6 +22,7 @@ for intent in a:
     questions.append(intent['patterns'])
     answers.append(intent['responses'])
 
+
 for i in range(6):
     for j in range(len(questions[i])):
         dict_q[questions[i][j]] = tags[i]
@@ -29,8 +30,9 @@ for i in range(6):
     for j in range(len(answers[i])):
         dict_a[answers[i][j]] = tags[i]
 
-index = [k for k in range(len(dict_q))]
 dfq = pd.DataFrame.from_dict(dict_q, orient="index")
+dfq.reset_index(drop=False, inplace=True)
+
 
 df = pd.read_csv('Restaurant_Reviews.tsv', delimiter='\t', quoting=3)
 nltk.download('stopwords')
