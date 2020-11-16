@@ -59,6 +59,12 @@ def bag_of_words(corpus):
     x = cv.fit_transform(corpus).toarray()
     return x
 
+def leabel_encoder(y):
+    from sklearn.preprocessing import LabelEncoder
+    le = LabelEncoder()
+    y = le.fit_transform(y)
+    return y
+
 ann = tf.keras.models.Sequential()
 def building_nn(xtrain, ytrain):
     ann.add(tf.keras.layers.Dense(units=1400, activation='relu'))
@@ -86,4 +92,6 @@ if __name__ == "__main__":
         testing = testing.reshape((1, 1400))
         x = np.delete(x, -1, axis=0)
         print(np.shape(x))
+        y = leabel_encoder(y)
+
 
