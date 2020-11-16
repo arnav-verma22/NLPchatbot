@@ -53,9 +53,11 @@ cv = CountVectorizer()
 x = cv.fit_transform(corpus).toarray()
 y = dfq.iloc[:, -1].values
 
-from sklearn.preprocessing import LabelEncoder
+'''from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
-y = le.fit_transform(y)
+y = le.fit_transform(y)'''
+
+y = pd.get_dummies(y)
 
 from sklearn.model_selection import train_test_split
 xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=0.15, random_state=0)
@@ -63,10 +65,11 @@ xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=0.15, random_sta
 ann = tf.keras.models.Sequential()
 ann.add(tf.keras.layers.Dense(units=25, activation='relu'))
 ann.add(tf.keras.layers.Dense(units=15, activation='relu'))
-ann.add(tf.keras.layers.Dense(units=5, activation='relu'))
-ann.add(tf.keras.layers.Dense(units=1, activation='relu'))
-ann.compile(optimizer = 'adam', loss = 'mean_squared_logarithmic_error', metrics = ['accuracy', 'mae'])
+ann.add(tf.keras.layers.Dense(units=6, activation='softmax'))
+ann.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 ann.fit(xtrain, ytrain, batch_size = 32, epochs = 100)
 
+nn_prediction = ann.predict(xtest)
 
-nn_prediction = np.around(ann.predict(xtest))
+from sklearn.metrics import confusion_matrix, accuracy_score
+print(accuracy_score(ytest, nn_prediction))
