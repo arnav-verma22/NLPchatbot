@@ -52,3 +52,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 cv = CountVectorizer()
 x = cv.fit_transform(corpus).toarray()
 y = dfq.iloc[:, -1].values
+
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+y = le.fit_transform(y)
