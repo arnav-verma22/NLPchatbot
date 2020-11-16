@@ -1,4 +1,4 @@
-#import tensorflow as tf
+import tensorflow as tf
 import pandas as pd
 import re
 import nltk
@@ -56,3 +56,14 @@ y = dfq.iloc[:, -1].values
 from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
 y = le.fit_transform(y)
+
+ann = tf.keras.models.Sequential()
+ann.add(tf.keras.layers.Dense(units=25, activation='relu'))
+ann.add(tf.keras.layers.Dense(units=15, activation='relu'))
+ann.add(tf.keras.layers.Dense(units=5, activation='relu'))
+ann.add(tf.keras.layers.Dense(units=1, activation='relu'))
+ann.compile(optimizer = 'softmax', loss = 'binary_crossentropy', metrics = ['accuracy'])
+ann.fit(xtrain, ytrain, batch_size = 32, epochs = 100)
+
+
+nn_prediction = np.around(ann.predict(xtest))
