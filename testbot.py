@@ -47,3 +47,8 @@ for i in dfq['index']:
     review = [ps.stem(i) for i in review ]
     review = ' '.join(review)
     corpus.append(review)
+
+from sklearn.feature_extraction.text import CountVectorizer
+cv = CountVectorizer()
+x = cv.fit_transform(corpus).toarray()
+y = dfq.iloc[:, -1].values
