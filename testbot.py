@@ -57,6 +57,9 @@ from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
 y = le.fit_transform(y)
 
+from sklearn.model_selection import train_test_split
+xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=0.15, random_state=0)
+
 ann = tf.keras.models.Sequential()
 ann.add(tf.keras.layers.Dense(units=25, activation='relu'))
 ann.add(tf.keras.layers.Dense(units=15, activation='relu'))
