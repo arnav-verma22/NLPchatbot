@@ -65,7 +65,7 @@ ann.add(tf.keras.layers.Dense(units=25, activation='relu'))
 ann.add(tf.keras.layers.Dense(units=15, activation='relu'))
 ann.add(tf.keras.layers.Dense(units=5, activation='relu'))
 ann.add(tf.keras.layers.Dense(units=1, activation='relu'))
-ann.compile(optimizer = 'softmax', loss = 'binary_crossentropy', metrics = ['accuracy'])
+ann.compile(optimizer = 'adam', loss = 'mean_squared_logarithmic_error', metrics = ['accuracy', 'mae'])
 ann.fit(xtrain, ytrain, batch_size = 32, epochs = 100)
 
 
